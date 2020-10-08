@@ -19,34 +19,26 @@ class Home extends StatelessWidget {
       appBar: AppBar( title: Text('MyHomeWidget')),
       body: Center(
         child: Row(children: [
-          Name('Cat'),
+          Expanded(child: Name('Dog'),),
           SizedBox(width: 9.0,),
-          Name('Dog'),
+          Expanded(child: Name('Cat')),
           SizedBox(width: 9.0,),
-          Name('Elephant'),
+          Expanded(child: Name('Tiger')),
         ],
-      )
-      )
-    );
+        ),));
   }
 }
 
 class Name extends StatelessWidget {
-
   final String _name;
-
   const Name(this._name);
 
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
       decoration: BoxDecoration(color: Colors.orange), 
-      child: Padding(
-        padding: EdgeInsets.all(8.0),
-        child: Text(this._name, 
-          style: TextStyle(fontSize: 30.0),
-        ),
-      ),
+      child: Padding( padding: EdgeInsets.all(8.0), child: 
+      Text(this._name, textAlign: TextAlign.center, style: TextStyle(fontSize: 30.0))),
     );
   }
 }
