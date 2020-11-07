@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import './Animal.dart';
+
 void main() {
   runApp(
     MaterialApp(
@@ -19,27 +21,11 @@ class Home extends StatelessWidget {
       appBar: AppBar( title: Text('MyHomeWidget')),
       body: Center(
         child: Row(children: [
-          Expanded(child: Name('Dog'),),
+          Expanded(child: Animal('Elephant'),),
           SizedBox(width: 9.0,),
-          Expanded(child: Name('Cat')),
-          SizedBox(width: 9.0,),
-          Expanded(child: Name('Tiger')),
+          Expanded(child: Animal('Cat')),
         ],
         ),));
-  }
-}
-
-class Name extends StatelessWidget {
-  final String _name;
-  const Name(this._name);
-
-  @override
-  Widget build(BuildContext context) {
-    return DecoratedBox(
-      decoration: BoxDecoration(color: Colors.orange), 
-      child: Padding( padding: EdgeInsets.all(8.0), child: 
-      Text(this._name, textAlign: TextAlign.center, style: TextStyle(fontSize: 30.0))),
-    );
   }
 }
 
