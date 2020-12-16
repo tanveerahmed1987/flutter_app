@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutterapp/ListExample.dart';
-
-import 'GridExample.dart';
+import 'package:flutter_sticky_header/flutter_sticky_header.dart';
 
 void main() {
   runApp(MyApp());
@@ -14,11 +12,41 @@ class MyApp extends StatelessWidget {
       home: Scaffold(
         appBar: AppBar(title: Text('Sticky Header Example')),
         body: Container(
-          color: Colors.teal,
-          child: ListView(
-            children: [
-              _Item(text: 'List Example' , builder: (_) => const ListExample() ,),
-              _Item(text: 'Grid Example' , builder: (_) => const GridExample() ,)
+          color: Colors.indigo,
+          child: CustomScrollView(
+            slivers: [
+              SliverStickyHeader(
+                header: Container(padding: EdgeInsets.all(16) ,color: Colors.lightGreen, child: Text('Header 1')),
+                sliver: SliverList(
+                  delegate: SliverChildBuilderDelegate((context, index) {
+                     return Card(
+                        child: ListTile(
+                           title: Text('Header 1 -> $index'),
+                          subtitle: Text('Sub Header 1'),
+                          tileColor: Colors.white,
+                       ),
+                     );
+                  },
+                  childCount: 20),
+                ),
+              ),
+
+              SliverStickyHeader(
+                header: Container(padding: EdgeInsets.all(16), color: Colors.lightGreen, child: Text('Header 2')),
+                // sliver: SliverFillRemaining(child: Container(child: Text('Body')),),
+                sliver: SliverList(
+                  delegate: SliverChildBuilderDelegate((context, index) {
+                     return Card(
+                        child: ListTile(
+                          title: Text('Header 2 -> $index'),
+                          subtitle : Text('Sub Header 2 -> $index'),
+                          tileColor: Colors.white,
+                        ),
+                     );
+                  },
+                  childCount: 40),
+                ),
+              )
             ],
           )
         )
@@ -28,35 +56,3 @@ class MyApp extends StatelessWidget {
 }
 
 
-class _Item extends StatelessWidget {
-
-  const _Item({
-    Key key,
-    @required this.text,
-    @required this.builder,
-  }) : super(key: key);
-
-  final String text;
-  final WidgetBuilder builder;
-
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      color: Colors.blue,
-      child: InkWell(
-          onTap: () {
-            Navigator.push(context, MaterialPageRoute(builder: builder));
-          },
-          child: Container(
-            padding: EdgeInsets.all(16),
-            child: Text(
-              text,
-              style: TextStyle(
-                  color: Colors.white, fontWeight: FontWeight.bold, fontSize: 20),
-            ),
-          ),
-      ), 
-    );
-  }
-}
