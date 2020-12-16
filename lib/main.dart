@@ -1,47 +1,62 @@
 import 'package:flutter/material.dart';
+import 'package:flutterapp/ListExample.dart';
+
+import 'GridExample.dart';
+
 void main() {
-  runApp(
-    MaterialApp(
-      title: 'Flutter Tutorial',
-      home: MyHomeWidget(),
-      theme: ThemeData(
-        primarySwatch: Colors.green,
-      ),
-      debugShowCheckedModeBanner: false,
-    )
-  );
+  runApp(MyApp());
 }
 
-class MyHomeWidget extends StatelessWidget {
+class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar( title: Text('MyHomeWidget')),
-      body: Center(child: Text('Hello MyHomeWidget!', style: TextStyle( color: Colors.black, fontSize: 20.0))),
-      floatingActionButton: FloatingActionButton( 
-          elevation: 10.0, 
-          child: Icon(Icons.add), 
-          onPressed: (){ } 
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(title: Text('Sticky Header Example')),
+        body: Container(
+          color: Colors.teal,
+          child: ListView(
+            children: [
+              _Item(text: 'List Example' , builder: (_) => const ListExample() ,),
+              _Item(text: 'Grid Example' , builder: (_) => const GridExample() ,)
+            ],
+          )
+        )
       ),
-      drawer: Drawer( 
-        child: ListView( 
-          children: const <Widget>[ 
-            DrawerHeader( 
-              decoration: BoxDecoration(color: Colors.green), 
-              child: Text( 'Drawer Header',style: TextStyle(color: Colors.white,fontSize: 24)), 
-            ), 
-            ListTile(title: Text('Item 1'),leading : Icon(Icons.people)), 
-            ListTile(title: Text('Item 2'), leading: Icon(Icons.mail)), 
-      ],),), 
-      bottomNavigationBar : BottomNavigationBar( 
-        currentIndex : 0, fixedColor: Colors.green, 
-        items: [ BottomNavigationBarItem(title : Text("Home"), icon : Icon(Icons.home)), 
-                 BottomNavigationBarItem(title : Text("Search"), icon : Icon(Icons.search)), 
-                 BottomNavigationBarItem(title : Text("Profile"), icon : Icon(Icons.account_circle))], 
-        onTap: (int indexOfItem){ }
-      ),
-      backgroundColor: Colors.greenAccent,
     );
   }
 }
 
+
+class _Item extends StatelessWidget {
+
+  const _Item({
+    Key key,
+    @required this.text,
+    @required this.builder,
+  }) : super(key: key);
+
+  final String text;
+  final WidgetBuilder builder;
+
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      color: Colors.blue,
+      child: InkWell(
+          onTap: () {
+            Navigator.push(context, MaterialPageRoute(builder: builder));
+          },
+          child: Container(
+            padding: EdgeInsets.all(16),
+            child: Text(
+              text,
+              style: TextStyle(
+                  color: Colors.white, fontWeight: FontWeight.bold, fontSize: 20),
+            ),
+          ),
+      ), 
+    );
+  }
+}
